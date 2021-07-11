@@ -24,4 +24,13 @@ public interface IAPI {
 
     @PUT("api/child/update_location")
     Observable<String> updateMyLocation(@Body Child child);
+
+    @POST("api/history/create")
+    Observable<String> addHistory(@Body History history);
+
+    @PUT("api/history/update")
+    Observable<String> updateHistory(@Body History history);
+
+    @GET("api/history/by_child/{id}")
+    Observable<History> getHistory(@Path("id")int id);
 }

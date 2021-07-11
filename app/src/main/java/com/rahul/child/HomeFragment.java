@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -55,11 +56,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     // static
     private static final String TAG = "HomeFragment";
     private static final String MY_ID = "Id";
-    private static final String MY_USERNAME = "UserName";
-    private static final String MY_EMAIL = "Email";
-    private static final String MY_PHONE = "PhoneNumber";
-    private static final String MY_LAT = "Lat";
-    private static final String MY_LNG = "Lng";
     private static final String MY_PREFERENCE = "childPref";
     private static final int FINE_LOCATION_ACCESS_REQUEST_CODE = 1001;
     private String GEOFENCE_ID = "F";
@@ -96,7 +92,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        getChildFences();
         enableUserLocation();
         map.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
             @Override
@@ -118,7 +113,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 .subscribe(new Consumer<String>() {
                                     @Override
                                     public void accept(String s) throws Exception {
-                                        Log.d(TAG, s);
+
+                                    }
+                                }, new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+                                        Toast.makeText(geoFenceHelper, throwable.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }));
                         }
@@ -171,18 +171,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         double lng = f.getLng();
                         LatLng latLng = new LatLng(lat, lng);
 
-                        System.out.println(lat);
-
-//                        latLngList.add(latLng);
-//                        latLngList.add(latLng);
                         addMarker(latLng);
                         addCricle(latLng, f.getRadius());
                         addGeoFence(latLng, f.getRadius());
                     }
-
-//                    addMarker(latLngList.get(0));
-//                    addCricle(latLngList.get(0), 200);
-//                    addGeoFence(latLngList.get(0), 200);
                 }
             }, new Consumer<Throwable>() {
                 @Override
@@ -190,8 +182,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                 }
             }));
-//        this.latLngList.add(latLng);
-
     }
 
     // add fence
@@ -226,6 +216,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     // function to add circle
     private void addCricle(LatLng latLng, int radius) {
+        System.out.println(latLng);
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(latLng);
         circleOptions.radius(radius);
@@ -236,4 +227,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         map.addCircle(circleOptions);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getChildFences();
+    }
 }
