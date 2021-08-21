@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     .subscribe(new Consumer<String>() {
                         @Override
                         public void accept(String s) throws Exception {
+                            System.out.println(s);
                             SharedPreferences preferences = getSharedPreferences(MY_PREFERENCE, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
 
@@ -91,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            System.out.println(throwable.getMessage());
                             Toast.makeText(LoginActivity.this, "Check your credentials", Toast.LENGTH_SHORT).show();
                         }
                     }));

@@ -7,16 +7,21 @@ public class Fence {
     private double Lng;
     private int Radius;
     private int ChildId;
+    private String Status;
+    private String Type;
 
     public Fence() {
     }
 
-    public Fence(String fenceName, double lat, double lng, int radius, int childId) {
+    public Fence(int id, String fenceName, double lat, double lng, int radius, int childId, String status, String type) {
+        Id = id;
         FenceName = fenceName;
         Lat = lat;
         Lng = lng;
         Radius = radius;
         ChildId = childId;
+        Status = status;
+        Type = type;
     }
 
     public int getId() {
@@ -65,5 +70,34 @@ public class Fence {
 
     public void setChildId(int childId) {
         ChildId = childId;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Fence{" +
+                "Id=" + Id +
+                ", FenceName='" + FenceName + '\'' +
+                ", Lat=" + Lat +
+                ", Lng=" + Lng +
+                ", Radius=" + Radius +
+                ", ChildId=" + ChildId +
+                ", Status='" + Status + '\'' +
+                '}';
     }
 }

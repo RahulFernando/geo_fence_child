@@ -1,6 +1,7 @@
 package com.rahul.child.Remote;
 
 import com.rahul.child.Model.Child;
+import com.rahul.child.Model.ChildFence;
 import com.rahul.child.Model.Fence;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -19,18 +21,15 @@ public interface IAPI {
     @GET("api/fence/find_by_child/{id}")
     Observable<List<Fence>> getFenceByChild(@Path("id")int id);
 
+    @GET("api/fence/find_by_id/{id}")
+    Observable<Fence> getFenceById(@Path("id")int id);
+
     @GET("api/child/by_id/{id}")
-    Observable<String> getChildById(@Path("id")int id);
+    Observable<List<ChildFence>> getChildById(@Path("id")int id);
 
     @PUT("api/child/update_location")
     Observable<String> updateMyLocation(@Body Child child);
 
-    @POST("api/history/create")
-    Observable<String> addHistory(@Body History history);
-
-    @PUT("api/history/update")
-    Observable<String> updateHistory(@Body History history);
-
-    @GET("api/history/by_child/{id}")
-    Observable<History> getHistory(@Path("id")int id);
+    @PATCH("api/fence/status_update/{id}")
+    Observable<String> updateFenceStatus(@Path("id")int id, @Body Fence fence);
 }

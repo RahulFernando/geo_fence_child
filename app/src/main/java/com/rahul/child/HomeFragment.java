@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.rahul.child.Model.Child;
+import com.rahul.child.Model.ChildFence;
 import com.rahul.child.Model.Fence;
 import com.rahul.child.Remote.IAPI;
 import com.rahul.child.Remote.RetrofitClient;
@@ -58,7 +60,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private static final String MY_ID = "Id";
     private static final String MY_PREFERENCE = "childPref";
     private static final int FINE_LOCATION_ACCESS_REQUEST_CODE = 1001;
-    private String GEOFENCE_ID = "F";
 
     // google & variables
     private GoogleMap map;
@@ -100,13 +101,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 compositeDisposable.add(api.getChildById(id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<String>() {
+                    .subscribe(new Consumer<List<ChildFence>>() {
                         @Override
-                        public void accept(String s) throws Exception {
-                            Gson gson = new Gson();
-                            Child child = gson.fromJson(s, Child.class);
+                        public void accept(List<ChildFence> childFence) throws Exception {
+                            Log.d(TAG, childFence.get(0).getChild().getUserName());
+                            Child child = childFence.get(0).getChild();
                             child.setLat(location.getLatitude());
                             child.setLng(location.getLongitude());
+                            for (Fence fence:childFence.get(0).getFences()
+                                 ) {
+                                if (fence.getStatus().equals("Exit") || fence.getStatus().equals("Enter")) {
+                                    updateFence(fence);
+                                }
+                            }
                             compositeDisposable.add(api.updateMyLocation(child)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -157,7 +164,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     public void getChildFences() {
         int id = preferences.getInt(MY_ID,0);
-        Log.d(TAG, "Id" + id);
         compositeDisposable.add(api.getFenceByChild(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -166,14 +172,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 public void accept(List<Fence> fences) throws Exception {
                     for (Fence f:fences
                          ) {
-                        Log.d(TAG, f.getFenceName());
                         double lat = f.getLat();
                         double lng = f.getLng();
                         LatLng latLng = new LatLng(lat, lng);
 
                         addMarker(latLng);
                         addCricle(latLng, f.getRadius());
-                        addGeoFence(latLng, f.getRadius());
+                        addGeoFence(latLng, f.getRadius(), f.getId());
                     }
                 }
             }, new Consumer<Throwable>() {
@@ -185,8 +190,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     // add fence
-    private void addGeoFence(LatLng latLng, int radius) {
-        GEOFENCE_ID = GEOFENCE_ID + 1;
+    private void addGeoFence(LatLng latLng, int radius, int id) {
+        String GEOFENCE_ID = String.valueOf(id);
         Geofence geofence = geoFenceHelper.getGeofence(GEOFENCE_ID, latLng, radius, Geofence.GEOFENCE_TRANSITION_ENTER |
                 Geofence.GEOFENCE_TRANSITION_DWELL |
                 Geofence.GEOFENCE_TRANSITION_EXIT);
@@ -231,5 +236,32 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onStart() {
         super.onStart();
         getChildFences();
+    }
+
+    /**
+     * Handle fence status update
+     * @param fence
+     */
+    private void updateFence(Fence fence) {
+        fence.setStatus("");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                compositeDisposable.add(api.updateFenceStatus(fence.getId(), fence)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
+
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                Toast.makeText(geoFenceHelper, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }));
+            }
+        }, 120000);
     }
 }
