@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,8 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String MY_LNG = "Lng";
 
     // views
-    private Button btn_login;
+    private ImageButton btn_login;
     private EditText edt_username, edt_password;
+    private LoadinDialog dialog;
 
     // db variables
     private IAPI api;
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edt_username = findViewById(R.id.edt_username);
         edt_password = findViewById(R.id.edt_password);
         btn_login = findViewById(R.id.btn_login);
+        dialog = new LoadinDialog(this);
 
         // event listener
         btn_login.setOnClickListener(this);
@@ -59,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        dialog.loadingAlertDialog();
         String username = edt_username.getText().toString();
         String password = edt_password.getText().toString();
         Child child = new Child(username, password, "");
@@ -70,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     .subscribe(new Consumer<String>() {
                         @Override
                         public void accept(String s) throws Exception {
-                            System.out.println(s);
+                            dialog.dismiss();
                             SharedPreferences preferences = getSharedPreferences(MY_PREFERENCE, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
 
@@ -92,11 +96,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            System.out.println(throwable.getMessage());
+                            dialog.dismiss();
                             Toast.makeText(LoginActivity.this, "Check your credentials", Toast.LENGTH_SHORT).show();
                         }
                     }));
         }
+        dialog.dismiss();
     }
 
     // validate form
