@@ -53,7 +53,7 @@ public class StaticRvAdapter extends  RecyclerView.Adapter<StaticRvAdapter.Stati
         if (row_index == position){
 //            holder.linearLayout.setBackgroundResource(R.drawable.static_rv_selected_bg);
             if (row_index == 0) {
-//                context.startActivity(new Intent(context, MapActivity.class));
+                context.startActivity(new Intent(context, ChatActivity.class));
             } else if (row_index == 1) {
 //                context.startActivity(new Intent(context, AddChildActivity.class));
             }

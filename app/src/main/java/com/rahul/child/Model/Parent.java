@@ -1,45 +1,33 @@
 package com.rahul.child.Model;
 
-public class Child {
+public class Parent {
     private int Id;
     private String UserName;
     private String Email;
     private String PhoneNumber;
     private String Password;
     private String Salt;
-    private double Lat;
-    private double Lng;
-    private int ParentId;
     private String Serial;
 
-    public Child() {
+    public Parent() {
     }
 
-    public Child(String userName, String password, String salt) {
+    public Parent(String userName, String password) {
         UserName = userName;
         Password = password;
-        Salt = salt;
     }
 
-    public Child(int id, String userName, String email, String phoneNumber, String password, String salt, double lat, double lng, int parentId, String serial) {
-        Id = id;
+    public Parent(String userName, String email, String phoneNumber, String password, String salt, String serial) {
         UserName = userName;
         Email = email;
         PhoneNumber = phoneNumber;
         Password = password;
         Salt = salt;
-        Lat = lat;
-        Lng = lng;
-        ParentId = parentId;
         Serial = serial;
     }
 
     public int getId() {
         return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
     }
 
     public String getUserName() {
@@ -80,30 +68,6 @@ public class Child {
 
     public void setSalt(String salt) {
         Salt = salt;
-    }
-
-    public double getLat() {
-        return Lat;
-    }
-
-    public void setLat(double lat) {
-        Lat = lat;
-    }
-
-    public double getLng() {
-        return Lng;
-    }
-
-    public void setLng(double lng) {
-        Lng = lng;
-    }
-
-    public int getParentId() {
-        return ParentId;
-    }
-
-    public void setParentId(int parentId) {
-        ParentId = parentId;
     }
 
     public String getSerial() {

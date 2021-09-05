@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:elevation="2dp"
+    android:id="@+id/card_child_chat"
+    android:layout_marginBottom="3dp"
+    android:layout_height="70dp">
+
+    <LinearLayout
+        android:id="@+id/chat_user_img"
+        android:padding="12dp"
+        android:background="@drawable/user_prof_bg"
+        android:elevation="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_user_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_user"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_chat_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/chat_user_img"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+        android:textSize="15sp"
+        android:text="Mason"/>
+
+<!--    <LinearLayout-->
+<!--        android:background="@drawable/msg_count_bg"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:layout_marginTop="25dp"-->
+<!--        android:layout_marginRight="10dp"-->
+<!--        android:layout_width="20dp"-->
+<!--        android:layout_height="20dp">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txt_count"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textAlignment="center"-->
+<!--            android:text="1"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:gravity="center_horizontal" />-->
+
+<!--    </LinearLayout>-->
+
+</RelativeLayout>
