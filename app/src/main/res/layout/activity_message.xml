@@ -66,6 +66,9 @@
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/btn_send"
             android:ems="10"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:backgroundTint="@color/black"
             android:hint="Type a message"
             android:inputType="textPersonName" />
 

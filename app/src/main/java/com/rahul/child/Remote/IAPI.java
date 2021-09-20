@@ -27,7 +27,7 @@ public interface IAPI {
     Observable<Fence> getFenceById(@Path("id")int id);
 
     @GET("api/child/by_id/{id}")
-    Observable<List<ChildFence>> getChildById(@Path("id")int id);
+    Observable<ChildFence> getChildById(@Path("id")int id);
 
     @PUT("api/child/update_location")
     Observable<String> updateMyLocation(@Body Child child);

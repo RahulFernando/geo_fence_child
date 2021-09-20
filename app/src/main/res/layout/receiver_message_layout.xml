@@ -27,6 +27,7 @@
         android:padding="8dp"
         android:layout_marginLeft="5dp"
         android:text="Hello"
+        android:textColor="@color/black"
         android:background="@drawable/message_receiver_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

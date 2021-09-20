@@ -98,43 +98,43 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMyLocationChange(Location location) {
                 int id = preferences.getInt(MY_ID, 0);
-                compositeDisposable.add(api.getChildById(id)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<List<ChildFence>>() {
-                        @Override
-                        public void accept(List<ChildFence> childFence) throws Exception {
-                            Log.d(TAG, childFence.get(0).getChild().getUserName());
-                            Child child = childFence.get(0).getChild();
-                            child.setLat(location.getLatitude());
-                            child.setLng(location.getLongitude());
-                            for (Fence fence:childFence.get(0).getFences()
-                                 ) {
-                                if (fence.getStatus().equals("Exit") || fence.getStatus().equals("Enter")) {
-                                    updateFence(fence);
-                                }
-                            }
-                            compositeDisposable.add(api.updateMyLocation(child)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new Consumer<String>() {
-                                    @Override
-                                    public void accept(String s) throws Exception {
-
-                                    }
-                                }, new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-                                        Toast.makeText(geoFenceHelper, throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }));
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-
-                        }
-                    }));
+//                compositeDisposable.add(api.getChildById(id)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe(new Consumer<List<ChildFence>>() {
+//                        @Override
+//                        public void accept(List<ChildFence> childFence) throws Exception {
+//                            Log.d(TAG, childFence.get(0).getChild().getUserName());
+//                            Child child = childFence.get(0).getChild();
+//                            child.setLat(location.getLatitude());
+//                            child.setLng(location.getLongitude());
+//                            for (Fence fence:childFence.get(0).getFences()
+//                                 ) {
+//                                if (fence.getStatus().equals("Exit") || fence.getStatus().equals("Enter")) {
+//                                    updateFence(fence);
+//                                }
+//                            }
+//                            compositeDisposable.add(api.updateMyLocation(child)
+//                                .subscribeOn(Schedulers.io())
+//                                .observeOn(AndroidSchedulers.mainThread())
+//                                .subscribe(new Consumer<String>() {
+//                                    @Override
+//                                    public void accept(String s) throws Exception {
+//
+//                                    }
+//                                }, new Consumer<Throwable>() {
+//                                    @Override
+//                                    public void accept(Throwable throwable) throws Exception {
+//                                        Toast.makeText(geoFenceHelper, throwable.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }));
+//                        }
+//                    }, new Consumer<Throwable>() {
+//                        @Override
+//                        public void accept(Throwable throwable) throws Exception {
+//
+//                        }
+//                    }));
             }
         });
     }
