@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello"
-        android:textColor="?attr/colorControlNormal"
+        android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
@@ -57,7 +57,7 @@
         android:layout_marginLeft="10dp"
         android:fontFamily="sans-serif-light"
         android:text="Rahul!"
-        android:textColor="?attr/colorControlNormal"
+        android:textColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,15 +80,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_username" />
 
-    <FrameLayout
-        android:id="@+id/container"
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_1">
-
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/rv_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

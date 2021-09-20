@@ -3,6 +3,8 @@ package com.rahul.child.Remote;
 import com.rahul.child.Model.Child;
 import com.rahul.child.Model.ChildFence;
 import com.rahul.child.Model.Fence;
+import com.rahul.child.Model.Message;
+import com.rahul.child.Model.Parent;
 
 import java.util.List;
 
@@ -25,11 +27,20 @@ public interface IAPI {
     Observable<Fence> getFenceById(@Path("id")int id);
 
     @GET("api/child/by_id/{id}")
-    Observable<List<ChildFence>> getChildById(@Path("id")int id);
+    Observable<ChildFence> getChildById(@Path("id")int id);
 
     @PUT("api/child/update_location")
     Observable<String> updateMyLocation(@Body Child child);
 
     @PATCH("api/fence/status_update/{id}")
     Observable<String> updateFenceStatus(@Path("id")int id, @Body Fence fence);
+
+    @GET("api/parent/by_id/{id}")
+    Observable<Parent> getParent(@Path("id") int id);
+
+    @GET("api/message/{sender}/{receiver}")
+    Observable<List<Message>> getMessages(@Path("sender") String sender, @Path("receiver") String receiver);
+
+    @POST("api/message/sendMessage")
+    Observable<String> sendMessages(@Body Message message);
 }

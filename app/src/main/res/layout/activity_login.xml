@@ -63,8 +63,9 @@
                     android:hint="USERNAME"
                     android:inputType="text"
                     android:padding="20dp"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textColorHint="?android:attr/textColorPrimary"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/black"
+                    android:textColorHint="@color/black"
                     android:textSize="14sp" />
 
                 <EditText
@@ -79,8 +80,9 @@
                     android:hint="PASSWORD"
                     android:inputType="textPassword"
                     android:padding="20dp"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textColorHint="?android:attr/textColorPrimary"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    android:backgroundTint="@color/black"
                     android:textSize="14sp" />
 
                 <ImageButton

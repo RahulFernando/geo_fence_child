@@ -34,6 +34,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String MY_PHONE = "PhoneNumber";
     private static final String MY_LAT = "Lat";
     private static final String MY_LNG = "Lng";
+    private static final String MY_PARENT = "ParentId";
+    private static final String MY_SERIAL = "Serial";
+    private static final String IS_LOGGED = "IsLogged";
 
     // views
     private ImageButton btn_login;
@@ -88,6 +91,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.putString(MY_PHONE, me.getPhoneNumber());
                             editor.putFloat(MY_LAT, (float) me.getLat());
                             editor.putFloat(MY_LNG, (float) me.getLng());
+                            editor.putInt(MY_PARENT, me.getParentId());
+                            editor.putString(MY_SERIAL, me.getSerial());
+                            editor.putBoolean(IS_LOGGED, true);
                             editor.apply();
 
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
